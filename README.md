@@ -1,4 +1,4 @@
-# Networks-Assignment-2
+# Network Assignment 2 - IRC Server Implementation
 Server Branch:
 This branch will contain code for the second part of the assignment for creating the irc server. 
 
