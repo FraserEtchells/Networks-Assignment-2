@@ -29,7 +29,7 @@ def addClientToClientList(socket, message):
     else:
         print("Error: client socket is already in client list currently")
 
-def addClientToLobby(socket):
+def addClientToLobby(socket, message):
     for client in clientList:
         if client.clientSocket == socket:
             if client in lobby:
@@ -40,7 +40,8 @@ def addClientToLobby(socket):
                 print ("Adding client to lobby")
                 lobby.append(client)
                 for client in lobby:
-                    client.clientSocket.send((client.clientNickname + " has joined the lobby \n").encode("utf-8"))
+                    print (":"+client.clientNickname+" "+message)
+                    client.clientSocket.send((":"+client.clientNickname+message).encode("utf-8"))
 
     
 
@@ -72,16 +73,16 @@ while True:
 
         # If we receive a JOIN command, we use the socket to search for client in clientList, then add that client to a channel
         if re.search("JOIN", message):
-            addClientToLobby(socketConnection)
+            addClientToLobby(socketConnection, message)
             
 
-        if message:
-            socketConnection.send(message.encode("utf-8"))
-            # for x in socketList:
-            #     x.send(message.encode("utf-8"))
-        else:
-            print("Closing socket")
-            break
+        # if message:
+        #     socketConnection.send(message.encode("utf-8"))
+        #     # for x in socketList:
+        #     #     x.send(message.encode("utf-8"))
+        # else:
+        #     print("Closing socket")
+        #     break
 
     # # use this for template to send message to everyone in the channel
     # for x in lobby:
