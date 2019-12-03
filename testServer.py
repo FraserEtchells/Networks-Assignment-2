@@ -30,19 +30,18 @@ def addClientToClientList(socket, message):
         print("Error: client socket is already in client list currently")
 
 def addClientToLobby(socket):
-    clientInChannel = False
     for client in clientList:
         if client.clientSocket == socket:
-            # add client to lobby
-            lobby.append(client)
-            #socket.send(client.clientNickname +" has joined the Lobby".encode("utf-8"))
-            clientInChannel = True
-    
-    if not clientInChannel:
-        socket.send("You are already in this Lobby".encode("utf-8"))
-    else:
-        for client in lobby:
-            client.clientSocket.send((client.clientNickname + " has joined the lobby").encode("utf-8"))
+            if client in lobby:
+                print ("Client is already in lobby")
+                client.clientSocket.send((client.clientNickname + " is already in the lobby \n").encode("utf-8"))
+                break
+            else:
+                print ("Adding client to lobby")
+                lobby.append(client)
+                for client in lobby:
+                    client.clientSocket.send((client.clientNickname + " has joined the lobby \n").encode("utf-8"))
+
     
 
   
